@@ -35,15 +35,15 @@ function bindSSHConnection(config, server, netConnection) {
 
     var sshConnection = new Connection();
     sshConnection.on("error",function(err){
-        if (config.keepAlive) {
-            console.log(err.message);
-            console.log("Trying to reconnect after 5s...");
-            setTimeout(function(){
-                sshConnection.connect(config);
-            },5000);
-        } else {
+        //if (config.keepAlive) {
+        //    console.log(err.message);
+        //    console.log("Trying to reconnect after 5s...");
+        //    setTimeout(function(){
+        //        sshConnection.connect(config);
+        //    },5000);
+        //} else {
             netConnection.end();
-        }
+        //}
     });
     sshConnection.on('ready', function () {
         //sshConnection._sock.unref();
@@ -55,16 +55,16 @@ function bindSSHConnection(config, server, netConnection) {
             config.dstHost,
             config.dstPort, function (err, sshStream) {
                 if (err) {
-                    if (config.keepAlive) {
-                        console.error("SSH Stream threw error:",err);
-                        console.log("Trying to reconnect after 5s...");
-                        setTimeout(function(){
-                            sshConnection.connect(config);
-                        },5000);
-                        return;
-                    } else {
+                    //if (config.keepAlive) {
+                    //    console.error("SSH Stream threw error:",err);
+                    //    console.log("Trying to reconnect after 5s...");
+                    //    setTimeout(function(){
+                    //        sshConnection.connect(config);
+                    //    },5000);
+                    //    return;
+                    //} else {
                         throw err;
-                    }
+                    //}
                 }
                 sshStream.once('close', function () {
                     sshConnection.end();
